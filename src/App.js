@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Input from "./Components/Input";
 import "./App.css";
-
+import List from "./Components/List";
 function App() {
   const [inputValue, setInputValue] = useState(0);
   const [dark, setDark] = useState(false);
@@ -10,17 +10,20 @@ function App() {
     for (let i = 0; i < 1000000000; i++) {}
     return num * 2;
   };
+  const forList = useCallback(() => {
+    return [inputValue, inputValue + 1, inputValue + 2];
+  }, [inputValue]);
   const multyplay = useMemo(() => {
     return slowFunction(inputValue);
   }, [inputValue]);
 
   const inputHandler = (event) => {
-    setInputValue(event.target.value);
+    setInputValue(parseInt(event.target.value));
   };
   const darkHandle = () => {
     setDark((prevDark) => !prevDark);
   };
-  const styles = useMemo(() => {
+  const stylesValue = useMemo(() => {
     return {
       backgroundColor: dark ? "black" : "white",
       color: dark ? "white" : "black",
@@ -28,13 +31,17 @@ function App() {
   }, [dark]);
   useEffect(() => {
     console.log("Color Changed");
-  }, [styles]);
+  }, [stylesValue]);
   return (
     <div className="App">
-      <h3>React Optimization Technique</h3>
-      <Input onChange={inputHandler} />
-      <button onClick={darkHandle}>Change Color</button>
-      <div style={styles}>{multyplay}</div>
+      <div style={stylesValue}>
+        <h3>React Optimization Technique</h3>
+        <Input onChange={inputHandler} />
+        <button onClick={darkHandle}>Change Color</button>
+        <div style={stylesValue}>{multyplay}</div>
+        <hr></hr>
+        <List inputValue={inputValue} forList={forList}></List>
+      </div>
     </div>
   );
 }
