@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Input from "./Components/Input";
 import "./App.css";
 import List from "./Components/List";
+import Msg from "./Components/Msg";
 function App() {
   const [inputValue, setInputValue] = useState(0);
   const [dark, setDark] = useState(false);
@@ -41,6 +42,7 @@ function App() {
         <div style={stylesValue}>{multyplay}</div>
         <hr></hr>
         <List inputValue={inputValue} forList={forList}></List>
+        <Msg />
       </div>
     </div>
   );
