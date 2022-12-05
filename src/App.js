@@ -17,7 +17,11 @@ function App() {
   const multyplay = useMemo(() => {
     return slowFunction(inputValue);
   }, [inputValue]);
-
+  useEffect(() => {
+    if (inputValue > 100) {
+      throw new Error("The number is too big");
+    }
+  }, [inputValue]);
   const inputHandler = (event) => {
     setInputValue(parseInt(event.target.value));
   };
@@ -38,10 +42,11 @@ function App() {
       <div style={stylesValue}>
         <h3>React Optimization Technique</h3>
         <Input onChange={inputHandler} />
+
         <button onClick={darkHandle}>Change Color</button>
         <div style={stylesValue}>{multyplay}</div>
         <hr></hr>
-        <List inputValue={inputValue} forList={forList}></List>
+        <List inputValue={inputValue} forList={forList} />
         <Msg />
       </div>
     </div>
